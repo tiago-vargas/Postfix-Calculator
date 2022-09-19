@@ -26,7 +26,16 @@ bool test_single_multiplication()
 
 	float result = evaluate(input);
 
-	return result == 10.0f;
+	return result == 10;
+}
+
+bool test_single_integer_division()
+{
+	char input[] = "10 2 /";
+
+	float result = evaluate(input);
+
+	return result == 5;
 }
 
 void run_test(bool (*testing_function)(), char *message)
@@ -44,6 +53,7 @@ void run_all_tests()
 	run_test(test_single_addition, "`2 5 +` should evaluate to 7");
 	run_test(test_single_subtraction, "`2 5 -` should evaluate to -3");
 	run_test(test_single_multiplication, "`2 5 *` should evaluate to 10");
+	run_test(test_single_integer_division, "`10 2 /` should evaluate to 5");
 }
 
 void main()
