@@ -19,4 +19,7 @@ float evaluate(char input[])
 
 	if (tokens[2][0] == '-')
 		return operand_1 - operand_2;
+
+	if (tokens[2][0] == '*')
+		return operand_1 * operand_2;
 }

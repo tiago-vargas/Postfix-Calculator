@@ -8,7 +8,7 @@ bool test_single_addition()
 
 	float result = evaluate(input);
 
-	return result == 7.0f;
+	return result == 7;
 }
 
 bool test_single_subtraction()
@@ -17,7 +17,16 @@ bool test_single_subtraction()
 
 	float result = evaluate(input);
 
-	return result == -3.0f;
+	return result == -3;
+}
+
+bool test_single_multiplication()
+{
+	char input[] = "2 5 *";
+
+	float result = evaluate(input);
+
+	return result == 10.0f;
 }
 
 void run_test(bool (*testing_function)(), char *message)
@@ -32,8 +41,9 @@ void run_all_tests()
 {
 	printf("-- TEST RESULTS --\n");
 
-	run_test(test_single_addition, "`2 5 +` should return 7");
-	run_test(test_single_subtraction, "`2 5 +` should return -3");
+	run_test(test_single_addition, "`2 5 +` should evaluate to 7");
+	run_test(test_single_subtraction, "`2 5 -` should evaluate to -3");
+	run_test(test_single_multiplication, "`2 5 *` should evaluate to 10");
 }
 
 void main()
