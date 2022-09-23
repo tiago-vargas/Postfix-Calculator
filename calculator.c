@@ -19,23 +19,23 @@ float evaluate(char input[])
 	char *tokens[200];
 	tokenize(input, tokens);
 
-	stack.elements[0] = atof(tokens[0]);
-	stack.elements[1] = atof(tokens[1]);
+	push_float(atof(tokens[0]), &stack);
+	push_float(atof(tokens[1]), &stack);
 
-	float last_number = stack.elements[0];
-	float penultimate_number = stack.elements[1];
+	float last_number = pop_float(&stack);
+	float penultimate_number = pop_float(&stack);
 
 	if (tokens[2][0] == '+')
-		result = last_number + penultimate_number;
+		result = penultimate_number + last_number;
 
 	if (tokens[2][0] == '-')
-		result = last_number - penultimate_number;
+		result = penultimate_number - last_number;
 
 	if (tokens[2][0] == '*')
-		result = last_number * penultimate_number;
+		result = penultimate_number * last_number;
 
 	if (tokens[2][0] == '/')
-		result = last_number / penultimate_number;
+		result = penultimate_number / last_number;
 
 	return result;
 }
