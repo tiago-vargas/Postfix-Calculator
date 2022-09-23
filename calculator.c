@@ -12,23 +12,27 @@ void tokenize(char string[], char *tokens[])
 
 float evaluate(char input[])
 {
-	float operand_1, operand_2;
+	float last_number, penultimate_number;
+	FloatStack stack = { .quantity = 0 };
 
 	char *tokens[200];
 	tokenize(input, tokens);
 
-	operand_1 = atof(tokens[0]);
-	operand_2 = atof(tokens[1]);
+	stack.elements[0] = atof(tokens[0]);
+	stack.elements[1] = atof(tokens[1]);
+
+	last_number = stack.elements[0];
+	penultimate_number = stack.elements[1];
 
 	if (tokens[2][0] == '+')
-		return operand_1 + operand_2;
+		return last_number + penultimate_number;
 
 	if (tokens[2][0] == '-')
-		return operand_1 - operand_2;
+		return last_number - penultimate_number;
 
 	if (tokens[2][0] == '*')
-		return operand_1 * operand_2;
+		return last_number * penultimate_number;
 
 	if (tokens[2][0] == '/')
-		return operand_1 / operand_2;
+		return last_number / penultimate_number;
 }
