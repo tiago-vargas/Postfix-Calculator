@@ -1,5 +1,5 @@
 #define MAX_SIZE 200
-#define out /**/
+#define out /* indicates that a parameters is used as a return value */
 
 typedef struct
 {
