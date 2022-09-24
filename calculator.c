@@ -3,6 +3,8 @@
 #include <string.h>
 #include "../../FloatStack/float_stack.c"
 
+#define out /**/
+
 void tokenize(char string[], char *tokens[])
 {
 	tokens[0] = strtok(string, " ");
@@ -27,6 +29,28 @@ bool is_number(char *string)
 		return false;
 }
 
+void operate_over_last_two_numbers(FloatStack *stack, char operator)
+{
+	float last_number = pop_float(stack);
+	float penultimate_number = pop_float(stack);
+
+	float result;
+
+	if (operator == '+')
+		result = penultimate_number + last_number;
+
+	if (operator == '-')
+		result = penultimate_number - last_number;
+
+	if (operator == '*')
+		result = penultimate_number * last_number;
+
+	if (operator == '/')
+		result = penultimate_number / last_number;
+
+	push_float(result, stack);
+}
+
 float evaluate(char input[])
 {
 	float result;
@@ -45,27 +69,8 @@ float evaluate(char input[])
 			push_float(atof(tokens[i]), &stack);
 
 		if (is_operator(tokens[i][0]))
-		{
-			char operator = tokens[i][0];
-
-			float last_number = pop_float(&stack);
-			float penultimate_number = pop_float(&stack);
-
-			if (operator == '+')
-				result = penultimate_number + last_number;
-
-			if (operator == '-')
-				result = penultimate_number - last_number;
-
-			if (operator == '*')
-				result = penultimate_number * last_number;
-
-			if (operator == '/')
-				result = penultimate_number / last_number;
-
-			push_float(result, &stack);
-		}
+			operate_over_last_two_numbers(&stack, tokens[i][0]);
 	}
 
-	return result;
+	return stack.elements[0];
 }
