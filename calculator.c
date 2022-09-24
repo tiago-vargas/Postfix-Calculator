@@ -1,9 +1,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "../../FloatStack/float_stack.c"
 
-#define out /**/
+#include "float_stack.c"
 
 void tokenize(char string[], char *tokens[])
 {
@@ -72,5 +71,8 @@ float evaluate(char input[])
 			operate_over_last_two_numbers(&stack, tokens[i][0]);
 	}
 
-	return stack.elements[0];
+	if (stack.quantity == 1)
+		return stack.elements[0];
+	else
+		printf("Error: Unreliable result. There still are multiple items on stack. Operators missing\n");
 }
