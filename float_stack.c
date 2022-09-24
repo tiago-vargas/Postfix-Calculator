@@ -6,7 +6,7 @@ typedef struct
 	int quantity;
 } FloatStack;
 
-void push_float(float number, FloatStack *stack)
+void push_float(float number, FloatStack *stack, float *error_code)
 {
 	int index_to_put = stack->quantity;
 
@@ -14,13 +14,20 @@ void push_float(float number, FloatStack *stack)
 	stack->quantity++;
 }
 
-float pop_float(FloatStack *stack)
+float pop_float(FloatStack *stack, float *error_code)
 {
 	int current_index = stack->quantity - 1;
 	float last_item = stack->elements[current_index];
 
 	if (stack->quantity > 0)
+	{
 		stack->quantity--;
+	}
+	else
+	{
+		*error_code = 1;
+		printf("ERROR: Attemped to pop from empty stack\n");
+	}
 
 	return last_item;
 }
