@@ -30,10 +30,10 @@ bool is_number(char *string)
 		return false;
 }
 
-void operate_over_last_two_numbers(FloatStack *stack, char operator)
+void operate_over_last_two_numbers(FloatStack *stack, char operator, out float *error_code)
 {
-	float last_number = pop_float(stack);
-	float penultimate_number = pop_float(stack);
+	float last_number = pop_float(stack, out error_code);
+	float penultimate_number = pop_float(stack, out error_code);
 
 	float result;
 
@@ -49,7 +49,7 @@ void operate_over_last_two_numbers(FloatStack *stack, char operator)
 	if (operator == '/')
 		result = penultimate_number / last_number;
 
-	push_float(result, stack);
+	push_float(result, stack, out error_code);
 }
 
 float evaluate(char input[], out float *error_code)
@@ -67,10 +67,10 @@ float evaluate(char input[], out float *error_code)
 			break;
 
 		if (is_number(tokens[i]))
-			push_float(atof(tokens[i]), &stack);
+			push_float(atof(tokens[i]), &stack, out error_code);
 
 		if (is_operator(tokens[i][0]))
-			operate_over_last_two_numbers(&stack, tokens[i][0]);
+			operate_over_last_two_numbers(&stack, tokens[i][0], out error_code);
 	}
 
 	if (stack.quantity == 1)
