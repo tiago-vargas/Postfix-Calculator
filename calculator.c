@@ -36,30 +36,33 @@ float evaluate(char input[])
 	char *tokens[200];
 	tokenize(input, tokens);
 
-	if (is_number(tokens[0]) && is_number(tokens[1]))
+	for (int i = 0; i < 200; i++)
 	{
-		push_float(atof(tokens[0]), &stack);
-		push_float(atof(tokens[1]), &stack);
-	}
+		if (tokens[i] == NULL)
+			break;
 
-	if (is_operator(tokens[2][0]))
-	{
-		char operator = tokens[2][0];
+		if (is_number(tokens[i]))
+			push_float(atof(tokens[i]), &stack);
 
-		float last_number = pop_float(&stack);
-		float penultimate_number = pop_float(&stack);
+		if (is_operator(tokens[i][0]))
+		{
+			char operator = tokens[i][0];
 
-		if (operator == '+')
-			result = penultimate_number + last_number;
+			float last_number = pop_float(&stack);
+			float penultimate_number = pop_float(&stack);
 
-		if (operator == '-')
-			result = penultimate_number - last_number;
+			if (operator == '+')
+				result = penultimate_number + last_number;
 
-		if (operator == '*')
-			result = penultimate_number * last_number;
+			if (operator == '-')
+				result = penultimate_number - last_number;
 
-		if (operator == '/')
-			result = penultimate_number / last_number;
+			if (operator == '*')
+				result = penultimate_number * last_number;
+
+			if (operator == '/')
+				result = penultimate_number / last_number;
+		}
 	}
 
 	return result;
