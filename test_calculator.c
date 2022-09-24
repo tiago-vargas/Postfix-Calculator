@@ -74,6 +74,16 @@ bool test_multiple_operations(out float *actual_result)
 	return result == 30;
 }
 
+bool test_five_operands_before_operators(out float *actual_result)
+{
+	char input[] = "2 5 6 10 4 * + - *";
+
+	float result = evaluate(input);
+
+	*actual_result = result;
+	return result == -82;
+}
+
 void run_test(bool (*testing_function)(), char *message)
 {
 	float actual_result;
@@ -97,6 +107,7 @@ void run_all_tests()
 	run_test(test_float_division_result, "`5 2 /` should evaluate to 2.5f");
 
 	run_test(test_multiple_operations, "`2 5 + 3 * 1 - 2 / 3 *` should evaluate to 30");
+	run_test(test_five_operands_before_operators, "`2 5 6 10 4 * + - *` should evaluate to -82");
 }
 
 void main()
