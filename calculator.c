@@ -62,6 +62,8 @@ float evaluate(char input[])
 
 			if (operator == '/')
 				result = penultimate_number / last_number;
+
+			push_float(result, &stack);
 		}
 	}
 
