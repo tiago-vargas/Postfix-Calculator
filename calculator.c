@@ -4,6 +4,8 @@
 
 #include "float_stack.c"
 
+#define out /**/
+
 void tokenize(char string[], char *tokens[])
 {
 	tokens[0] = strtok(string, " ");
@@ -50,7 +52,7 @@ void operate_over_last_two_numbers(FloatStack *stack, char operator)
 	push_float(result, stack);
 }
 
-float evaluate(char input[])
+float evaluate(char input[], out float *error_code)
 {
 	float result;
 
@@ -72,7 +74,13 @@ float evaluate(char input[])
 	}
 
 	if (stack.quantity == 1)
+	{
+		*error_code = 0;
 		return stack.elements[0];
+	}
 	else
-		printf("Error: Unreliable result. There still are multiple items on stack. Operators missing\n");
+	{
+		*error_code = -1;
+		printf("Error: Unreliable result. There still are multiple items on stack. Too few operators.\n");
+	}
 }
