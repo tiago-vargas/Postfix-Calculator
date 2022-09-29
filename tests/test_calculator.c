@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include "calculator.c"
+#include "../calculator.c"
 
 #define out /* use `out` simply to indicate that the parameter is intended to serve as a returned value */
 
@@ -113,7 +113,7 @@ void run_test(bool (*testing_function)(), char *message)
 
 void run_all_tests()
 {
-	printf("-- TEST RESULTS --\n");
+	printf("-- CALCULATOR TEST RESULTS --\n");
 
 	run_test(test_single_addition, "`2 5 +` should evaluate to 7");
 	run_test(test_single_subtraction, "`2 5 -` should evaluate to -3");

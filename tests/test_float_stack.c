@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include "float_stack.c"
+#include "../float_stack.c"
 
 bool test_pushing_one_item_to_stack(float *error_code)
 {
@@ -83,7 +83,7 @@ void run_test(bool (*testing_function)(), char *message)
 
 void run_all_tests()
 {
-	printf("-- TEST RESULTS --\n");
+	printf("-- FLOAT STACK TEST RESULTS --\n");
 
 	run_test(test_pushing_one_item_to_stack, "pushing 2.5f to empty stack should make its elements be [ 2.5f, ... ]");
 	run_test(test_incrementing_stack_on_push, "pushing to empty stack should make its quantity be 1");
