@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../float_stack.c"
+#include "../tests.c"
 
 #define out /* use `out` simply to indicate that the parameter is intended to serve as a returned value */
 
@@ -73,14 +74,6 @@ bool test_popping_from_empty_stack_error(out float *error_code)
 	pop_float(&stack, out error_code);
 
 	return *error_code == POP_FROM_EMPTY_STACK_ERROR_CODE;
-}
-
-void run_test(bool (*testing_function)(), char *message)
-{
-	if (testing_function())
-		printf("PASSED: %s\n", message);
-	else
-		printf("----- FAILED: %s\n", message);
 }
 
 void run_all_tests()

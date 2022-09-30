@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../calculator.c"
+#include "../tests.c"
 
 #define out /* use `out` simply to indicate that the parameter is intended to serve as a returned value */
 
@@ -99,16 +100,6 @@ bool test_too_few_operators_error(out float *error_code)
 	float result = evaluate(input, out error_code);
 
 	return *error_code == TOO_FEW_OPERATORS_ERROR;
-}
-
-void run_test(bool (*testing_function)(), char *message)
-{
-	float actual_result;
-
-	if (testing_function(out &actual_result))
-		printf("\x1b[32mPASSED\x1b[0m: %s\n", message);
-	else
-		printf("\x1b[31mFAILED\x1b[0m: %s. Got: %f\n", message, actual_result);
 }
 
 void run_all_tests()
