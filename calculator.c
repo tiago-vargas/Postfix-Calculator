@@ -80,14 +80,10 @@ float evaluate(char input[], out float *error_code)
 			operate_over_last_two_numbers(&stack, tokens[i][0], out error_code);
 	}
 
-	if (stack.quantity == 1)
-	{
-		*error_code = NO_EVALUATION_ERRORS;
-		return stack.elements[0];
-	}
-	else
-	{
+	if (stack.quantity != 1)
 		*error_code = TOO_FEW_OPERATORS_ERROR;
-		fprintf(stderr, "Error: Too few operators. There still are multiple items on stack. Unreliable result.\n");
-	}
+	else
+		*error_code = NO_EVALUATION_ERRORS;
+
+	return stack.elements[0];
 }
