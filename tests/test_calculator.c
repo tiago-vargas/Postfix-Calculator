@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include "calculator.c"
+#include "../calculator.c"
+#include "../tests.c"
 
 #define out /* use `out` simply to indicate that the parameter is intended to serve as a returned value */
 
@@ -98,35 +99,34 @@ bool test_too_few_operators_error(out float *error_code)
 
 	float result = evaluate(input, out error_code);
 
-	return *error_code == -1;
-}
-
-void run_test(bool (*testing_function)(), char *message)
-{
-	float actual_result;
-
-	if (testing_function(out &actual_result))
-		printf("\x1b[32mPASSED\x1b[0m: %s\n", message);
-	else
-		printf("\x1b[31mFAILED\x1b[0m: %s. Got: %f\n", message, actual_result);
+	return *error_code == TOO_FEW_OPERATORS_ERROR;
 }
 
 void run_all_tests()
 {
-	printf("-- TEST RESULTS --\n");
+	printf("-- CALCULATOR TEST RESULTS --\n");
 
-	run_test(test_single_addition, "`2 5 +` should evaluate to 7");
-	run_test(test_single_subtraction, "`2 5 -` should evaluate to -3");
-	run_test(test_single_multiplication, "`2 5 *` should evaluate to 10");
-	run_test(test_single_integer_division, "`10 2 /` should evaluate to 5");
+	run_test(test_single_addition,
+	         "`2 5 +` should evaluate to 7");
+	run_test(test_single_subtraction,
+	         "`2 5 -` should evaluate to -3");
+	run_test(test_single_multiplication,
+	         "`2 5 *` should evaluate to 10");
+	run_test(test_single_integer_division,
+	         "`10 2 /` should evaluate to 5");
 
-	run_test(test_float_operands, "`5.6 1.9 +` should evaluate to 7.5f");
-	run_test(test_float_division_result, "`5 2 /` should evaluate to 2.5f");
+	run_test(test_float_operands,
+	         "`5.6 1.9 +` should evaluate to 7.5f");
+	run_test(test_float_division_result,
+	         "`5 2 /` should evaluate to 2.5f");
 
-	run_test(test_multiple_operations, "`2 5 + 3 * 1 - 2 / 3 *` should evaluate to 30");
-	run_test(test_five_operands_before_operators, "`2 5 6 10 4 * + - *` should evaluate to -82");
+	run_test(test_multiple_operations,
+	         "`2 5 + 3 * 1 - 2 / 3 *` should evaluate to 30");
+	run_test(test_five_operands_before_operators,
+	         "`2 5 6 10 4 * + - *` should evaluate to -82");
 
-	run_test(test_too_few_operators_error, "`2 5 6 10 4 * +` should have error code of -1");
+	run_test(test_too_few_operators_error,
+	         "`2 5 6 10 4 * +` should have error code of TOO_FEW_OPERATORS");
 }
 
 void main()

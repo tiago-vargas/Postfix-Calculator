@@ -4,9 +4,16 @@
 
 #include "float_stack.c"
 
-#define out /**/
+#define out /* use `out` simply to indicate that the parameter is intended to serve as a returned value */
 
-void tokenize(char string[], char *tokens[])
+enum evaluation_error_codes
+{
+	NO_EVALUATION_ERRORS = 0,
+	TOO_FEW_OPERATORS_ERROR,
+	TOO_MANY_OPERATORS_ERROR
+};
+
+void tokenize(char string[], out char *tokens[])
 {
 	tokens[0] = strtok(string, " ");
 
@@ -35,6 +42,12 @@ void operate_over_last_two_numbers(FloatStack *stack, char operator, out float *
 	float last_number = pop_float(stack, out error_code);
 	float penultimate_number = pop_float(stack, out error_code);
 
+	if (*error_code == POP_FROM_EMPTY_STACK_ERROR_CODE)
+	{
+		*error_code = TOO_MANY_OPERATORS_ERROR;
+		return;
+	}
+
 	float result;
 
 	if (operator == '+')
@@ -59,7 +72,7 @@ float evaluate(char input[], out float *error_code)
 	FloatStack stack = { .quantity = 0 };
 
 	char *tokens[200];
-	tokenize(input, tokens);
+	tokenize(input, out tokens);
 
 	for (int i = 0; i < 200; i++)
 	{
@@ -73,14 +86,13 @@ float evaluate(char input[], out float *error_code)
 			operate_over_last_two_numbers(&stack, tokens[i][0], out error_code);
 	}
 
+	if (*error_code == TOO_MANY_OPERATORS_ERROR)
+		return 0.0f;
+
 	if (stack.quantity == 1)
-	{
-		*error_code = 0;
-		return stack.elements[0];
-	}
-	else
-	{
-		*error_code = -1;
-		printf("Error: Unreliable result. There still are multiple items on stack. Too few operators.\n");
-	}
+		*error_code = NO_EVALUATION_ERRORS;
+	else if (stack.quantity > 1)
+		*error_code = TOO_FEW_OPERATORS_ERROR;
+
+	return stack.elements[0];
 }
