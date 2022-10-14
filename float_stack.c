@@ -19,8 +19,17 @@ void push_float(float number, FloatStack *stack, out float *error_code)
 {
 	int index_to_put = stack->quantity;
 
-	stack->elements[index_to_put] = number;
-	stack->quantity++;
+	if (stack->quantity == STACK_CAPACITY)
+	{
+		*error_code = PUSH_TO_FULL_STACK_ERROR_CODE;
+	}
+	else
+	{
+		*error_code = NO_STACK_ERRORS;
+
+		stack->elements[index_to_put] = number;
+		stack->quantity++;
+	}
 }
 
 float pop_float(FloatStack *stack, out float *error_code)

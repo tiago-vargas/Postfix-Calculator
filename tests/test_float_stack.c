@@ -76,6 +76,17 @@ bool test_popping_from_empty_stack_error(out float *error_code)
 	return *error_code == POP_FROM_EMPTY_STACK_ERROR_CODE;
 }
 
+bool test_pushing_to_full_stack_to_have_no_effect()
+{
+	FloatStack stack = { .quantity = STACK_CAPACITY };
+
+	float error_code;
+
+	push_float(2.7f, &stack, &error_code);
+
+	return stack.quantity == STACK_CAPACITY;
+}
+
 void run_all_tests()
 {
 	printf("-- FLOAT STACK TEST RESULTS --\n");
@@ -95,6 +106,9 @@ void run_all_tests()
 	         "popping from empty stack should make its quantity still be 0");
 	run_test(test_popping_from_empty_stack_error,
 	         "popping from empty stack should return error code of POP_FROM_EMPTY_STACK_ERROR_CODE");
+
+	run_test(test_pushing_to_full_stack_to_have_no_effect,
+	         "pushing to full stack should make its quantity still be STACK_CAPACITY");
 }
 
 void main()
