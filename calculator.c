@@ -42,6 +42,12 @@ void operate_over_last_two_numbers(FloatStack *stack, char operator, out float *
 	float last_number = pop_float(stack, out error_code);
 	float penultimate_number = pop_float(stack, out error_code);
 
+	if (*error_code == POP_FROM_EMPTY_STACK_ERROR_CODE)
+	{
+		*error_code = TOO_MANY_OPERATORS_ERROR;
+		return;
+	}
+
 	float result;
 
 	if (operator == '+')
@@ -80,10 +86,13 @@ float evaluate(char input[], out float *error_code)
 			operate_over_last_two_numbers(&stack, tokens[i][0], out error_code);
 	}
 
-	if (stack.quantity != 1)
-		*error_code = TOO_FEW_OPERATORS_ERROR;
-	else
+	if (*error_code == TOO_MANY_OPERATORS_ERROR)
+		return 0.0f;
+
+	if (stack.quantity == 1)
 		*error_code = NO_EVALUATION_ERRORS;
+	else if (stack.quantity > 1)
+		*error_code = TOO_FEW_OPERATORS_ERROR;
 
 	return stack.elements[0];
 }

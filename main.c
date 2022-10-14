@@ -13,13 +13,17 @@ int main()
 	while ((c = getchar()) != '\n')
 		input[i++] = c;
 
-	int error_code;
+	float error_code;
 	float result = evaluate(input, out &error_code);
 
-	printf("Result: %f\n", result);
-
 	if (error_code == TOO_MANY_OPERATORS_ERROR)
-		fprintf(stderr, "ERROR: Too many operators.\n");
+		fprintf(stderr, "ERROR: Too many operators, not enough operands.\n");
+
+	if (error_code == TOO_FEW_OPERATORS_ERROR)
+		fprintf(stderr, "ERROR: Not enough operators, too many operands.\n");
+
+	if (error_code == NO_EVALUATION_ERRORS)
+		printf("Result: %f\n", result);
 
 	return 0;
 }
